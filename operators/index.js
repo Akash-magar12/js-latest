@@ -65,3 +65,5 @@ console.log(res5); // Prints: "Akash"
 // Therefore, the ?? operator considers it a valid value and keeps it!
 let res6 = 0 ?? "Akash";
 console.log(res6); // Prints: 0
+
+
