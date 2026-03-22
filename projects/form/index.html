@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Details Form</title>
+
+    <!-- We put our CSS up here in the head! -->
+    <style>
+      /* Center everything on the screen */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f3f4f6;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 50px;
+      }
+
+      /* The white card holding the form */
+      .form-card {
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 300px;
+      }
+
+      .input-group {
+        margin-bottom: 20px;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box; /* Keeps padding from breaking the width */
+        outline: none;
+      }
+
+      /* CSS MAGIC: Visual Validation */
+      input:invalid {
+        border-left: 4px solid red;
+      }
+
+      input:valid {
+        border-left: 4px solid #10b981; /* Green */
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #3b82f6; /* Blue */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+
+      .submit-btn:hover {
+        background-color: #2563eb; /* Darker blue */
+      }
+
+      /* A class to hide our display area until we are ready for JS later */
+      .hidden {
+        display: none;
+      }
+
+      /* Styling for the display card when it finally shows up */
+      #display-card {
+        margin-top: 20px;
+        background-color: #e0f2fe;
+        padding: 20px;
+        border-radius: 10px;
+        width: 300px;
+        border: 1px solid #bae6fd;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 1. The Form Card -->
+    <div class="form-card">
+      <h2>User Details</h2>
+
+      <!-- The form wrapper -->
+      <form id="user-form">
+        <div class="input-group">
+          <label for="username">Name:</label>
+          <!-- Notice the "required" attribute here! -->
+          <input type="text" id="username" placeholder="Enter your name" />
+        </div>
+
+        <div class="input-group">
+          <label for="email">Email:</label>
+          <!-- Notice the "required" attribute here! -->
+          <input type="email" id="email" placeholder="Enter your email" />
+        </div>
+
+        <button type="submit" class="submit-btn">Submit Details</button>
+      </form>
+    </div>
+
+    <!-- 2. The Output Card (Hidden for now!) -->
+    <div id="display-card" class="hidden">
+      <h3>Submitted Details:</h3>
+      <p><strong>Name:</strong> <span id="display-name"></span></p>
+      <p><strong>Email:</strong> <span id="display-email"></span></p>
+    </div>
+    <script>
+      // ==========================================
+      // STEP 1: Grab all the hardware (Elements)
+      // ==========================================
+      const form = document.getElementById("user-form");
+      const nameInput = document.getElementById("username");
+      const emailInput = document.getElementById("email");
+
+      const displayCard = document.getElementById("display-card");
+      const displayName = document.getElementById("display-name");
+      const displayEmail = document.getElementById("display-email");
+
+      // ==========================================
+      // STEP 2: Listen for the 'submit' event
+      // ==========================================
+      // PRO TIP: Always listen to the FORM's 'submit' event, NOT the button's 'click' event.
+      // This ensures that if the user presses the "Enter" key on their keyboard, it still works!
+      form.addEventListener("submit", (event) => {
+        // STEP 3: Stop the default refresh!
+        // Forms naturally want to send data to a server and refresh the entire webpage.
+        // This single line stops that dead in its tracks so our JS can take over.
+        event.preventDefault();
+
+        // STEP 4: Extract the text the user typed
+        // For normal HTML elements we use '.textContent'.
+        // But for <input> boxes, we MUST use '.value'!
+        const enteredName = nameInput.value;
+        const enteredEmail = emailInput.value;
+
+        // STEP 5: The Guard Clause (Validation)
+        // .trim() removes any accidental spaces the user typed.
+        if (enteredName.trim() === "" || enteredEmail.trim() === "") {
+          alert("Please fill out all fields!");
+          return; // Stops the machine right here
+        }
+
+        // STEP 6: Inject the data into the HTML
+        displayName.textContent = enteredName;
+        displayEmail.textContent = enteredEmail;
+
+        // STEP 7: Reveal the hidden card!
+        displayCard.classList.remove("hidden");
+
+        // BONUS STEP: Clear the form so it's ready for the next person
+        form.reset();
+      });
+    </script>
+  </body>
+</html>

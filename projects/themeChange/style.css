@@ -1,0 +1,19 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  transition: 0.3s;
+  background-color: white;
+  color: black;
+}
+
+.dark-theme {
+  background-color: black;
+  color: white;
+}

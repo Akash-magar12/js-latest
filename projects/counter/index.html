@@ -1,0 +1,103 @@
+<!-- <!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Counter</h1>
+    <button class="decre">-</button>
+    <span>1</span>
+    <button class="incre">+</button>
+
+    <script>
+      // ==========================================
+      // 1. SELECT THE ELEMENTS (Grab the hardware)
+      // ==========================================
+      const incre = document.querySelector(".incre");
+      const decre = document.querySelector(".decre");
+      
+      // Pro-tip: querySelector("span") works great here because there is only one span. 
+      // If you had multiple spans, you would want to give this one a class or ID!
+      const span = document.querySelector("span"); 
+
+      // ==========================================
+      // 2. THE STATE (The memory of the machine)
+      // ==========================================
+      let count = 1;
+
+      // ==========================================
+      // 3. THE INCREMENT LOGIC (+)
+      // ==========================================
+      incre.addEventListener("click", () => {
+        count++; // 1. Update the memory
+        span.textContent = count; // 2. Update the screen to match the memory
+        console.log("Increased to:", count);
+      });
+
+      // ==========================================
+      // 4. THE DECREMENT LOGIC (-)
+      // ==========================================
+      decre.addEventListener("click", () => {
+        // The Guard Clause: Only run this code IF the count is 1 or higher.
+        // (This means the counter will stop exactly at 0).
+        if (count >= 1) {
+          count--; // 1. Update the memory
+          span.textContent = count; // 2. Update the screen
+          console.log("Decreased to:", count);
+        } 
+        
+        // Notice the 'else' block is gone! 
+        // If count is 0, the machine just ignores the click and does nothing.
+      });
+    </script>
+  </body>
+</html> -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Counter App - Pro Way</title>
+  </head>
+  <body>
+    <h1>Counter</h1>
+    
+    <!-- We wrap our counter inside a "building" (a div) -->
+    <div id="counter-building">
+      <button class="decre">-</button>
+      <span id="screen">1</span>
+      <button class="incre">+</button>
+    </div>
+
+    <script>
+      // 1. Grab the ENTIRE building, and the screen
+      const building = document.getElementById("counter-building");
+      const screen = document.getElementById("screen");
+      
+      let count = 1;
+
+      // 2. Put ONE event listener on the entire building
+      // We pass the "event" object (e) to see exactly what triggered the click
+      building.addEventListener("click", (e) => {
+        
+        // 3. Check if the thing they clicked has the class "incre"
+        if (e.target.classList.contains("incre")) {
+          count++;
+        }
+        
+        // 4. Check if the thing they clicked has the class "decre"
+        if (e.target.classList.contains("decre")) {
+          // PRO TRICK: Math.max picks the highest number. 
+          // If count - 1 drops below 0, it forces it to stay at 0! 
+          // (This completely replaces your if/else statement)
+          count = Math.max(1, count - 1);
+        }
+
+        // 5. Update the screen ONCE at the very end
+        screen.textContent = count;
+      });
+    </script>
+  </body>
+</html>

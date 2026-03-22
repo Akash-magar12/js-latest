@@ -1,0 +1,217 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Color Generator</title>
+
+    <style>
+      /* ==========================================
+         1. BASE STYLES (Centering & Smooth Fades)
+         ========================================== */
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #e2e8f0; /* Default starting background */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh; /* Takes up the full screen height */
+
+        /* MAGIC: This makes the JS color changes smooth later! */
+        transition: background-color 0.4s ease;
+      }
+
+      h1 {
+        color: #1e293b;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        text-shadow: 0 2px 4px rgba(255, 255, 255, 0.5); /* Makes text readable on dark colors later */
+      }
+
+      /* ==========================================
+         2. THE MAIN CARD
+         ========================================== */
+      .card {
+        background-color: white;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        width: 380px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Evenly spaces everything inside the card */
+      }
+
+      /* ==========================================
+         3. BUTTONS
+         ========================================== */
+      .btn {
+        padding: 15px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition:
+          transform 0.1s,
+          background-color 0.2s;
+      }
+
+      .btn:active {
+        transform: scale(0.97); /* Gives a satisfying "click" shrink effect */
+      }
+
+      .primary-btn {
+        background-color: #6366f1; /* Purple/Blue */
+        color: white;
+      }
+
+      .primary-btn:hover {
+        background-color: #4f46e5;
+      }
+
+      /* ==========================================
+         4. INPUT ROW
+         ========================================== */
+      .input-group {
+        display: flex;
+        gap: 10px;
+      }
+
+      .input-group span {
+        flex-grow: 1; /* Makes the input box stretch to fill space */
+      }
+
+      input[type="text"] {
+        width: 100%;
+        padding: 12px;
+        border: 2px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 16px;
+        outline: none;
+      }
+
+      input[type="text"]:focus {
+        border-color: #10b981; /* Turns green when typing */
+      }
+
+      .secondary-btn {
+        background-color: #10b981; /* Green */
+        color: white;
+        padding: 0 20px;
+      }
+
+      .secondary-btn:hover {
+        background-color: #059669;
+      }
+
+      /* ==========================================
+         5. COLOR DISPLAY TEXT
+         ========================================== */
+      .color-display {
+        text-align: center;
+        font-size: 18px;
+        font-weight: 600;
+        color: #475569;
+        background-color: #f8fafc;
+        padding: 15px;
+        border-radius: 8px;
+        border: 2px dashed #94a3b8;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Random Color Generator</h1>
+
+    <!-- We added the "card" class to your div! -->
+    <div class="card">
+      <button class="btn primary-btn" id="random-btn">Random Color</button>
+
+      <div class="input-group">
+        <span>
+          <input
+            type="text"
+            id="color-input"
+            placeholder="e.g. #ff0000 or blue"
+          />
+        </span>
+        <button class="btn secondary-btn" id="apply-btn">Apply</button>
+      </div>
+
+      <!-- Added an ID to the text so we can change it with JS later -->
+      <p class="color-display">
+        Current Color: <span id="color-text">#e2e8f0</span>
+      </p>
+    </div>
+    <script>
+      const randomBtn = document.getElementById("random-btn");
+      const applyBtn = document.getElementById("apply-btn");
+      const colorInput = document.getElementById("color-input");
+      const colorText = document.getElementById("color-text");
+
+      // Shortcut to grab the <body> tag
+      const body = document.body;
+
+      const colors = [
+        "red",
+        "yellow",
+        "blue",
+        "green",
+        "orange",
+        "purple",
+        "pink",
+        "brown",
+        "black",
+        "white",
+        "gray",
+        "cyan",
+        "magenta",
+        "lime",
+        "teal",
+        "navy",
+        "maroon",
+        "olive",
+        "coral",
+        "gold",
+      ];
+
+      // ==========================================
+      // 1. RANDOM BUTTON (Uses your array logic!)
+      // ==========================================
+      randomBtn.addEventListener("click", () => {
+        // Pick the random color
+        let random = Math.floor(Math.random() * colors.length);
+        let pickedColor = colors[random];
+        console.log("Randomly picked:", pickedColor);
+        // Change the background
+        body.style.backgroundColor = pickedColor;
+        // Update the text on the screen
+        colorText.textContent = pickedColor;
+        // Fill in the input box to match!
+        colorInput.value = pickedColor;
+      });
+
+      // ==========================================
+      // 2. APPLY BUTTON (Reads whatever the user typed)
+      // ==========================================
+      applyBtn.addEventListener("click", () => {
+        // Grab the text from the input box
+        let typedColor = colorInput.value.trim();
+        console.log(typedColor)
+        // If the user actually typed something, apply it!
+        if (typedColor !== "") {
+          body.style.backgroundColor = typedColor;
+          colorText.textContent = typedColor;
+        }
+      });
+    </script>
+  </body>
+</html>
