@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Strikethrough List UI</title>
+    <style>
+      /* ==========================================
+           1. BASE STYLES & CENTERING
+           ========================================== */
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f9fafb; /* Very light gray background */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-top: 50px;
+        margin: 0;
+      }
+
+      h1 {
+        color: #1f2937;
+        margin-bottom: 20px;
+      }
+
+      /* ==========================================
+           2. LIST CONTAINER STYLES
+           ========================================== */
+      ul {
+        list-style-type: none; /* Removes the default bullet points */
+        padding: 0;
+        margin: 0;
+        width: 300px;
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05); /* Soft shadow */
+        overflow: hidden; /* Keeps the rounded corners clean */
+      }
+
+      /* ==========================================
+           3. INDIVIDUAL LIST ITEM STYLES
+           ========================================== */
+      li {
+        padding: 16px 20px;
+        border-bottom: 1px solid #f3f4f6; /* Light dividing line */
+        font-size: 18px;
+        color: #374151;
+        cursor: pointer; /* Turns the mouse into a pointing hand */
+        transition: all 0.2s ease; /* Makes hover effects smooth */
+      }
+
+      li:last-child {
+        border-bottom: none; /* Removes the dividing line from the very last item */
+      }
+
+      li:hover {
+        background-color: #f3f4f6; /* Slight gray background on hover */
+      }
+
+      /* ==========================================
+           4. THE "LINE-THROUGH" STATE
+           ========================================== */
+      .completed {
+        text-decoration: line-through; /* The magic line-through property */
+        color: #9ca3af; /* Fades the text to a light gray */
+        background-color: #f9fafb; /* Dims the background slightly */
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Grocery List</h1>
+
+    <ul>
+      <li>Apple</li>
+      <li>Banana</li>
+      <li>Orange</li>
+    </ul>
+
+   <script>
+      let ul = document.querySelector("ul");
+
+      ul.addEventListener("click", (e) => {
+        
+        // 1. THE GUARD CLAUSE: Check if the exact thing they clicked is an "LI"
+        // (Note: JavaScript tag names are always returned in UPPERCASE)
+        if (e.target.tagName === "LI") {
+          
+          // 2. THE TOGGLE: Adds the class if it's not there, removes it if it is!
+          e.target.classList.toggle("completed");
+          
+        }
+        
+      });
+    </script>
+  </body>
+</html>

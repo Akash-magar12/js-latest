@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfect Modal</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        height: 100%;
+        width: 100%;
+        font-family: sans-serif;
+      }
+      
+      /* Adding a little padding so the open button isn't squished in the corner */
+      body {
+        padding: 50px;
+        text-align: center;
+      }
+
+      .model-container {
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        width: 100%;
+        display: none; /* Hidden by default */
+        background: #00000043;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .model-content {
+        background-color: white;
+        padding: 50px;
+        border-radius: 8px; /* Added slightly rounded corners for a modern look */
+        text-align: center;
+      }
+
+      .model-content p {
+        margin-bottom: 20px;
+        font-size: 18px;
+      }
+
+      /* Basic button styling to make them look clickable */
+      button {
+        padding: 10px 20px;
+        cursor: pointer;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <h1>Modal Project</h1>
+    <br>
+    
+    <button id="open-btn">Open Modal</button>
+    
+    <div class="model-container">
+      <div class="model-content">
+        <p>This is the secret content!</p>
+        <button class="btn">Close</button>
+      </div>
+    </div>
+
+    <script>
+      // FIX 2: Grab the button by its specific ID
+      let button = document.querySelector("#open-btn");
+      let model_container = document.querySelector(".model-container");
+      let close_btn = document.querySelector(".btn");
+
+      // Close when clicking the dark background
+      model_container.addEventListener("click", (e) => {
+        // e.currentTarget is the dark background. e.target is what you actually clicked.
+        if (e.target === e.currentTarget) {
+          model_container.style.display = "none";
+        }
+      });
+
+      // Open the modal
+      button.addEventListener("click", () => {
+        // FIX 3: Set to "flex" so your align-items and justify-content CSS works!
+        model_container.style.display = "flex";
+      });
+
+      // Close when clicking the Close button
+      close_btn.addEventListener("click", () => {
+        model_container.style.display = "none";
+      });
+    </script>
+  </body>
+</html>

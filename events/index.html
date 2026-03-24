@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        display: flex;
+        justify-content: center;
+        padding: 50px;
+      }
+
+      /* Making three distinct boxes so we can see the nesting */
+      .grandparent {
+        background-color: #fca5a5;
+        padding: 40px;
+        border: 2px solid red;
+        cursor: pointer;
+      }
+      .parent {
+        background-color: #bfdbfe;
+        padding: 40px;
+        border: 2px solid blue;
+      }
+      .child {
+        background-color: #bbf7d0;
+        padding: 40px;
+        border: 2px solid green;
+      }
+
+      h3 {
+        margin-top: 0;
+        pointer-events: none;
+      } /* Prevents clicking the text by accident */
+    </style>
+  </head>
+  <body>
+    <div class="grandparent">
+      <h3>Grandparent</h3>
+
+      <div class="parent">
+        <h3>Parent</h3>
+
+        <div class="child">
+          <h3>Child (Click Me!)</h3>
+        </div>
+      </div>
+    </div>
+    <script>
+      const grandparent = document.querySelector(".grandparent");
+      const parent = document.querySelector(".parent");
+      const child = document.querySelector(".child");
+
+      /* ==========================================
+         THE GOLDEN RULES OF EVENTS:
+         1. e.target = WHAT you clicked. (The origin pixel). This NEVER changes.
+         2. e.currentTarget = WHO is currently hearing the event. This CHANGES as the event bubbles up.
+         ========================================== */
+
+      // Because of "Bubbling", if you click the Child, the browser fires the
+      // Child listener first, then moves up to the Parent, then the Grandparent.
+
+      child.addEventListener("click", (e) => {
+        console.log("🟢 --- 1. CHILD LISTENER FIRED ---");
+
+        // If you clicked the green Child box:
+        // e.target is the Child (because your mouse touched it).
+        console.log("e.target is:", e.target);
+
+        // e.currentTarget is also the Child (because we are inside the Child's event listener).
+        console.log("e.currentTarget is:", e.currentTarget);
+      });
+
+      parent.addEventListener("click", (e) => {
+        console.log("🔵 --- 2. PARENT LISTENER FIRED ---");
+
+        // If you originally clicked the green Child box:
+        // e.target is STILL the Child! It remembers where the click started.
+        console.log("e.target is:", e.target);
+
+        // BUT e.currentTarget is now the Parent! The bubble has traveled up
+        // the DOM tree, and the Parent's "ear" is now hearing it.
+        console.log("e.currentTarget is:", e.currentTarget);
+      });
+
+      grandparent.addEventListener("click", (e) => {
+        console.log("🔴 --- 3. GRANDPARENT LISTENER FIRED ---");
+
+        // If you originally clicked the green Child box:
+        // e.target is STILL the Child!
+        console.log("e.target is:", e.target);
+
+        // e.currentTarget is now the Grandparent. The bubble has reached the top.
+        console.log("e.currentTarget is:", e.currentTarget);
+      });
+    </script>
+  </body>
+</html>
