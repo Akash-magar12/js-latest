@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do App</title>
+    <style>
+      /* ==========================================
+         1. BASE STYLES & CENTERING
+         ========================================== */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background-color: #f3f4f6; /* Soft gray background */
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* ==========================================
+         2. THE MAIN CARD
+         ========================================== */
+      .todo-app {
+        background-color: white;
+        width: 100%;
+        max-width: 400px;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+        color: #1f2937;
+        margin-bottom: 20px;
+        font-size: 24px;
+      }
+
+      /* ==========================================
+         3. INPUT SECTION
+         ========================================== */
+      .input-section {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+
+      input[type="text"] {
+        flex: 1; /* Makes the input stretch to fill available space */
+        padding: 12px 15px;
+        font-size: 16px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.2s;
+      }
+
+      input[type="text"]:focus {
+        border-color: #3b82f6; /* Blue border on focus */
+      }
+
+      .add-btn {
+        background-color: #3b82f6;
+        color: white;
+        border: none;
+        padding: 0 20px;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition:
+          background-color 0.2s,
+          transform 0.1s;
+      }
+
+      .add-btn:hover {
+        background-color: #2563eb;
+      }
+
+      .add-btn:active {
+        transform: scale(0.95);
+      }
+
+      /* ==========================================
+         4. THE LIST ITEMS
+         ========================================== */
+      ul {
+        list-style: none; /* Removes the default bullet points */
+      }
+
+      .todo-item {
+        display: flex;
+        justify-content: space-between; /* Pushes text left, button right */
+        align-items: center;
+        background-color: #f9fafb;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #e5e7eb;
+        transition: background-color 0.2s;
+      }
+
+      .todo-item:hover {
+        background-color: #f3f4f6;
+      }
+
+      .task-text {
+        font-size: 16px;
+        color: #374151;
+      }
+
+      .delete-btn {
+        background-color: transparent;
+        color: #ef4444; /* Red */
+        border: none;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        border-radius: 4px;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: background-color 0.2s;
+      }
+
+      .delete-btn:hover {
+        background-color: #fee2e2; /* Light red hover state */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="todo-app">
+      <h1>Daily Tasks</h1>
+
+      <div class="input-section">
+        <input
+          type="text"
+          id="todo-input"
+          placeholder="What needs to be done?"
+        />
+        <button id="add-btn" class="add-btn">Add</button>
+      </div>
+
+      <ul id="todo-list"></ul>
+    </div>
+
+    <script>
+      // 1. Grab the input box so we can read what the user types
+      const todoInput = document.querySelector("#todo-input");
+
+      // 2. Grab the "Add" button so we can listen for clicks
+      const addBtn = document.querySelector("#add-btn");
+
+      // 3. Grab the <ul> container so we know where to inject new tasks
+      const todoList = document.querySelector("#todo-list");
+
+      addBtn.addEventListener("click", () => {
+        const taskText = todoInput.value;
+        if (taskText === "") {
+          alert("Please enter some text");
+          return;
+        }
+
+        const newTaskHtml = ` <li class="todo-item">
+          <span class="task-text">${taskText}</span>
+          <button class="delete-btn">&times;</button>
+        </li>`;
+
+        todoList.insertAdjacentHTML("beforeend", newTaskHtml);
+        todoInput.value = "";
+        todoInput.focus();
+      });
+
+      todoList.addEventListener("click", (event) => {
+        console.log(event.target.classList)
+        // 1. event.target is the EXACT pixel/element you clicked on.
+        // We check if that element has the class "delete-btn"
+        if (event.target.classList.contains("delete-btn")) {
+          // 2. If it IS a delete button, we grab its parent (the <li> container)
+          const itemToDelete = event.target.parentElement;
+          console.log(itemToDelete)
+
+          // 3. Destroy it!
+          itemToDelete.remove();
+        }
+      });
+    </script>
+  </body>
+</html>
