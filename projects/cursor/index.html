@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blurred Trail Cursor</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        cursor: none; /* Hides the default cursor */
+      }
+      
+      html, body {
+        height: 100%;
+        width: 100%;
+        background-color: #111; /* Dark background makes the glow pop! */
+      }
+
+      /* 1. THE MAIN DOT (Fast & Sharp) */
+      .cursor {
+        height: 12px;
+        width: 12px;
+        background-color: #ff3366; /* Bright pinkish-red */
+        border-radius: 50%;
+        position: absolute;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        z-index: 999; /* Keeps the main dot on top */
+      }
+
+      /* 2. THE BLURRED TRAIL (Soft & Delayed) */
+      .cursor-trail {
+        height: 40px;
+        width: 40px;
+        background-color: rgba(255, 51, 102, 0.4); /* Semi-transparent color */
+        border-radius: 50%;
+        position: absolute;
+        pointer-events: none;
+        transform: translate(-50%, -50%);
+        
+        /* THE MAGIC: Blurs the edges of the circle to make it glow */
+        filter: blur(6px); 
+        
+        /* The delay effect */
+        transition: left 0.15s ease-out, top 0.15s ease-out;
+      }
+    </style>
+  </head>
+  <body>
+    
+    <div class="cursor-trail"></div>
+    <div class="cursor"></div>
+
+    <script>
+      let cursor = document.querySelector(".cursor");
+      let trail = document.querySelector(".cursor-trail");
+      
+      document.addEventListener("mousemove", (e) => {
+        cursor.style.left = e.clientX + "px";
+        cursor.style.top = e.clientY + "px";
+        
+        trail.style.left = e.clientX + "px";
+        trail.style.top = e.clientY + "px";
+      });
+    </script>
+  </body>
+</html>
